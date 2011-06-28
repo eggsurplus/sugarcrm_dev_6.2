@@ -36,12 +36,18 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
-
 global $db;
 function displayAdminError($errorString){
 	$output = '<p class="error">' . $errorString .'</p>';
 		echo $output;
 }
+
+/** eggsurplus: have a method to display any general error message */
+if(isset($_SESSION['general_error'])){
+displayAdminError($_SESSION['general_error']);
+unset($_SESSION['general_error']);
+}
+/** end eggsurplus */
 
 if(isset($_SESSION['rebuild_relationships'])){
 	displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));

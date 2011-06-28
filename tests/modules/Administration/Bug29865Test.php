@@ -47,6 +47,7 @@ class Bug29865Test extends Sugar_PHPUnit_Framework_TestCase {
 
 
 	function testGeneralError() {	
+
 		ob_start();
 		include('modules/Administration/DisplayWarnings.php');
 		$output_html = ob_get_contents();

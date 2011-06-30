@@ -67,7 +67,6 @@ class Bug23816Test extends Sugar_PHPUnit_Framework_TestCase
         require_once('include/formbase.php');
         
         $url = buildRedirectURL($return_id,'Accounts');
-        $GLOBALS['log']->fatal($url);
         $this->assertContains('offset=4',$url,"Offset was not included in the redirect url");
         
     }

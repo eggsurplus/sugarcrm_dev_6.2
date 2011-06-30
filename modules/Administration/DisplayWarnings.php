@@ -36,6 +36,7 @@ if(!defined('sugarEntry') || !sugarEntry) die('Not A Valid Entry Point');
  ********************************************************************************/
 
 
+
 global $db;
 function displayAdminError($errorString){
 	$output = '<p class="error">' . $errorString .'</p>';

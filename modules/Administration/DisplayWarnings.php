@@ -49,13 +49,6 @@ if(isset($_SESSION['general_error'])){
 }
 /** end eggsurplus */
 
-/** eggsurplus: have a method to display any general error message */
-if(isset($_SESSION['general_error'])){
-displayAdminError($_SESSION['general_error']);
-unset($_SESSION['general_error']);
-}
-/** end eggsurplus */
-
 if(isset($_SESSION['rebuild_relationships'])){
 	displayAdminError(translate('MSG_REBUILD_RELATIONSHIPS', 'Administration'));
 }

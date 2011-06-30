@@ -57,7 +57,6 @@ class Bug29865Test extends Sugar_PHPUnit_Framework_TestCase {
 		//output should be <p class="error">Hello World</p>.
 		//Cannot guarantee that Hello World will be wrapped the same always so just check to see if it is in the output
 		$this->assertContains('Hello World',$output_html,"Output did not contain Hello World");
-
 	}
 
 

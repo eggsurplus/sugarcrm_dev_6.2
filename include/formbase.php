@@ -238,7 +238,12 @@ function handleRedirect($return_id='', $return_module='')
     
     if (!isset($isDuplicate) || !$isDuplicate)
     {
-        header("Location: index.php?action=$return_action&module=$return_module&record=$return_id&return_module=$return_module&return_action=$return_action");
+    	//eggsurplus Bug 23816: maintain VCR after an edit/save. If it is a duplicate then don't worry about it. The offset is now worthless.
+    	$redirect_url = "Location: index.php?action=$return_action&module=$return_module&record=$return_id&return_module=$return_module&return_action=$return_action";
+    	if(isset($_REQUEST['offset']) && empty($_REQUEST['duplicateSave'])) {
+    		$redirect_url .= "&offset=".$_REQUEST['offset'];
+    	}
+        header($redirect_url);
     } else {
     	$standard = "action=$return_action&module=$return_module&record=$return_id&isDuplicate=true&return_module=$return_module&return_action=$return_action&status=$status";
    		$add = '';

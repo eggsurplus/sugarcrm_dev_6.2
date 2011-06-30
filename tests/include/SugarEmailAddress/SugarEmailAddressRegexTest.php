@@ -49,6 +49,12 @@ class SugarEmailAddressRegexTest extends Sugar_PHPUnit_Framework_TestCase
 	        // For Bug 39186
 	        array('qfflats-@uol.com.br',true),
 	        array('atendimento-hd.@uol.com.br',true),
+	        
+	        // For Bug 13018
+	        array('Ert.F.Suu.-PA@pumpaudio.com',true),
+	        // For Bug 23202
+	        array('test--user@example.com',true),
+	        
 	        );
 	}
     

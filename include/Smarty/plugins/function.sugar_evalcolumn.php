@@ -94,7 +94,8 @@ function smarty_function_sugar_evalcolumn($params, &$smarty)
     	   $code = str_replace(array_keys($str_replace), array_values($str_replace), $code);
     	}
     	
-    	if(!empty($params['var']['displayParams']['enableConnectors'])) {
+    	//eggsurplus bug 28321: add support for rendering customCode AND normal field rendering
+    	if(!empty($params['var']['displayParams']['enableConnectors']) && empty($params['var']['customCodeRenderField'])) {
     	  require_once('include/connectors/utils/ConnectorUtils.php');
     	  $code .= '&nbsp;' . ConnectorUtils::getConnectorButtonScript($params['var']['displayParams'], $smarty);
     	}

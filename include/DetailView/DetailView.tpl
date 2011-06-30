@@ -122,7 +122,7 @@ class="yui-navset detailview_tabs"
 			    {{if !empty($colData.field.name)}}
 			    {if !$fields.{{$colData.field.name}}.hidden}
 			    {{/if}}
-				{{if $colData.field.customCode || $colData.field.assign}}
+				{{if ($colData.field.customCode && !$colData.field.customCodeRenderField) || $colData.field.assign}}
 					{counter name="panelFieldCount"}
 					<span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
 				{{elseif $fields[$colData.field.name] && !empty($colData.field.fields) }}
@@ -138,6 +138,10 @@ class="yui-navset detailview_tabs"
 				{{elseif $fields[$colData.field.name]}}
 					{counter name="panelFieldCount"}
 					{{sugar_field parentFieldArray='fields' vardef=$fields[$colData.field.name] displayType='DetailView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type}}
+				{{/if}}
+				{{if !empty($colData.field.customCode) && $colData.field.customCodeRenderField}}
+					{counter name="panelFieldCount"}
+					<span id="{{$colData.field.name}}" class="sugar_field">{{sugar_evalcolumn var=$colData.field colData=$colData}}</span>
 				{{/if}}
 				{{if !empty($colData.field.name)}}
 				{/if}

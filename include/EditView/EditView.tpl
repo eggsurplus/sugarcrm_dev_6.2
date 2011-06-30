@@ -166,7 +166,7 @@ class="yui-navset"
 			            {{sugar_field parentFieldArray='fields' tabindex=$colData.field.tabindex vardef=$fields[$subField.name] displayType='EditView' displayParams=$subField.displayParams formName=$form_name}}&nbsp;
 			        {{/if}}
 			    {{/foreach}}
-			{{elseif !empty($colData.field.customCode)}}
+			{{elseif !empty($colData.field.customCode) && empty($colData.field.customCodeRenderField)}}
 				{counter name="panelFieldCount"}
 				{{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$colData.field.tabindex}}
 			{{elseif $fields[$colData.field.name]}}
@@ -174,6 +174,13 @@ class="yui-navset"
 			    {{$colData.displayParams}}
 				{{sugar_field parentFieldArray='fields' tabindex=$colData.field.tabindex vardef=$fields[$colData.field.name] displayType='EditView' displayParams=$colData.field.displayParams typeOverride=$colData.field.type formName=$form_name}}
 			{{/if}}
+
+			{{if !empty($colData.field.customCode) && !empty($colData.field.customCodeRenderField)}}
+				{counter name="panelFieldCount"}
+				{{sugar_evalcolumn var=$colData.field.customCode colData=$colData tabindex=$colData.field.tabindex}}
+			{{/if}}
+			
+
     {{if !empty($colData.field.hideIf)}}
 		{else}
 		<td></td><td></td>

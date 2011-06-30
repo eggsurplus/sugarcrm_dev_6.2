@@ -502,6 +502,12 @@ class SugarController{
 		$id = (!empty($this->return_id) ? $this->return_id : $this->bean->id);
 
 		$url = "index.php?module=".$module."&action=".$action."&record=".$id;
+		
+		//eggsurplus Bug 23816: maintain VCR after an edit/save. If it is a duplicate then don't worry about it. The offset is now worthless.
+		if(isset($_REQUEST['offset']) && empty($_REQUEST['duplicateSave'])) {
+			$url .= "&offset=".$_REQUEST['offset'];
+		}
+	
 		$this->set_redirect($url);
 	}
 

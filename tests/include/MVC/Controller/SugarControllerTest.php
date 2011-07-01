@@ -262,6 +262,19 @@ class SugarControllerTest extends Sugar_PHPUnit_Framework_TestCase
         
         rmdir_recursive("modules/$module_name");
     }
+    
+    public function testVcrOffset()
+    {    	
+    	$module_name = 'TestModule'.mt_rand();
+        $controller = new SugarControllerMock;
+        $controller->setup($module_name);
+    	$controller->return_module = $module_name;
+    	$controller->return_action = 'DetailView';
+    	$controller->return_id = '123456';
+    	$_REQUEST['offset'] = 4;
+        $controller->post_save();
+        $this->assertContains('offset=4',$controller->redirect_url,"Offset was not included in the redirect url");
+    }
 }
 
 class SugarControllerMock extends SugarController
@@ -271,5 +284,10 @@ class SugarControllerMock extends SugarController
     public function callLegacyCode()
     {
         return parent::callLegacyCode();
+    }
+    
+    public function post_save() 
+    {
+        return parent::post_save();
     }
 }

@@ -162,26 +162,23 @@ class SugarFieldFile extends SugarFieldBase {
         }
 	}
 	
-	//From http://www.smokycogs.com/blog/finding-the-maximum-file-upload-size-in-php/
-	function convert_size_to_num($size)
-	{
-		//This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
-		$l = substr($size, -1);
-		$ret = substr($size, 0, -1);
-		switch(strtoupper($l)){
-		case 'P':
-			$ret *= 1024;
-		case 'T':
-			$ret *= 1024;
-		case 'G':
-			$ret *= 1024;
-		case 'M':
-			$ret *= 1024;
-		case 'K':
-			$ret *= 1024;
-			break;
+	//Takes the size from the php.ini and converts it to bytes
+	function convert_to_bytes($size)
+	{		
+		$ret_size = $size;
+		switch (substr (strtolower($size), -1))
+		{
+			case 'k': 
+				$ret_size = (int)$size * 1024;
+				break;
+			case 'm': 
+				$ret_size = (int)$size * 1048576;
+				break;
+			case 'g': 
+				$ret_size = (int)$size * 1073741824;
+				break;
 		}
-		return $ret;
+		return $ret_size;  
 	}
 	
 	function reader_friendly_size($size) 
@@ -191,14 +188,14 @@ class SugarFieldFile extends SugarFieldBase {
 			$size = number_format(($size / 1024), 2);
 			$size .= ' kb';
 		} 
-		else if(($size / 1024 / 1024) < 1024) 
+		else if(($size / 1048576) < 1024) 
 		{
-			$size = number_format(($size / 1024 / 1024), 2);
+			$size = number_format(($size / 1048576), 2);
 			$size .= ' mb';
 		} 
-		else if(($size / 1024 / 1024 / 1024) < 1024) 
+		else if(($size / 1073741824) < 1024) 
 		{
-			$size = number_format(($size / 1024 / 1024 / 1024), 2);
+			$size = number_format(($size / 1073741824), 2);
 			$size .= ' gb';
 		}
 		
@@ -208,7 +205,7 @@ class SugarFieldFile extends SugarFieldBase {
 	function get_max_fileupload_size()
 	{
 		global $sugar_config;
-		$max_upload_size = min($this->convert_size_to_num(ini_get('post_max_size')), $this->convert_size_to_num(ini_get('upload_max_filesize')));
+		$max_upload_size = min($this->convert_to_bytes(ini_get('post_max_size')), $this->convert_to_bytes(ini_get('upload_max_filesize')));
 		$max_upload_size = min($sugar_config['upload_maxsize'],$max_upload_size);
 		
 		return $this->reader_friendly_size($max_upload_size);

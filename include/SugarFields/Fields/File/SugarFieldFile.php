@@ -77,6 +77,7 @@ class SugarFieldFile extends SugarFieldBase {
     
 	function getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex) {
         $this->fillInOptions($vardef,$displayParams);
+        $displayParams['max_fileupload_size'] = $this->get_max_fileupload_size();
         return parent::getEditViewSmarty($parentFieldArray, $vardef, $displayParams, $tabindex);
     }
     
@@ -159,5 +160,57 @@ class SugarFieldFile extends SugarFieldBase {
                 $bean->$clearField = '';
             }
         }
+	}
+	
+	//From http://www.smokycogs.com/blog/finding-the-maximum-file-upload-size-in-php/
+	function convert_size_to_num($size)
+	{
+		//This function transforms the php.ini notation for numbers (like '2M') to an integer (2*1024*1024 in this case)
+		$l = substr($size, -1);
+		$ret = substr($size, 0, -1);
+		switch(strtoupper($l)){
+		case 'P':
+			$ret *= 1024;
+		case 'T':
+			$ret *= 1024;
+		case 'G':
+			$ret *= 1024;
+		case 'M':
+			$ret *= 1024;
+		case 'K':
+			$ret *= 1024;
+			break;
+		}
+		return $ret;
+	}
+	
+	function reader_friendly_size($size) 
+    {
+		if(($size / 1024) < 1024) 
+		{
+			$size = number_format(($size / 1024), 2);
+			$size .= ' kb';
+		} 
+		else if(($size / 1024 / 1024) < 1024) 
+		{
+			$size = number_format(($size / 1024 / 1024), 2);
+			$size .= ' mb';
+		} 
+		else if(($size / 1024 / 1024 / 1024) < 1024) 
+		{
+			$size = number_format(($size / 1024 / 1024 / 1024), 2);
+			$size .= ' gb';
+		}
+		
+		return $size;
+	} 
+
+	function get_max_fileupload_size()
+	{
+		global $sugar_config;
+		$max_upload_size = min($this->convert_size_to_num(ini_get('post_max_size')), $this->convert_size_to_num(ini_get('upload_max_filesize')));
+		$max_upload_size = min($sugar_config['upload_maxsize'],$max_upload_size);
+		
+		return $this->reader_friendly_size($max_upload_size);
 	}
 }

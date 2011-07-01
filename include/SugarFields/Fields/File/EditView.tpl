@@ -100,6 +100,7 @@ type="file" title='{{$vardef.help}}' size="{{$displayParams.size|default:30}}"
     maxlength="255"
 {{/if}}
 {{$displayParams.field}}>
+<span class="dateFormat">( < {{$displayParams.max_fileupload_size}} )</span>
 
 
 {{if isset($vardef.allowEapm) && $vardef.allowEapm}}
@@ -129,6 +130,7 @@ onclick="SUGAR.field.file.clearRemote('{{$idName}}'); return false;"
 </span>
 {{/if}}
 </span>
+
 
 <div style="display: none;" id="{{$idName}}_securityLevelBox">
   <b>{$APP.LBL_EXTERNAL_SECURITY_LEVEL}: </b>

@@ -182,10 +182,6 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
 
     function getAvailableFields ()
     {
-        //eggsurplus: Bug 10329 - sort on intuitive display. Need to return translated label to do this
-        global $current_language;
-        $defModStrings = return_module_language($current_language, $this->_moduleName);
-
     	// Obtain the full list of valid fields in this module
     	$availableFields = array () ;
         foreach ( $this->_fielddefs as $key => $def )
@@ -199,7 +195,7 @@ class GridLayoutMetaDataParser extends AbstractMetaDataParser implements MetaDat
                     $availableFields [ $key ] = array ( 'name' => $key , 'label' => isset($def [ 'label' ]) ? $def [ 'label' ] : $def['vname'] ) ; // layouts use 'label' not 'vname' for the label entry
             	}
             	//eggsurplus: Bug 10329 - sort on intuitive display. Need to return translated label to do this 
-            	$availableFields[$key]['translatedLabel'] = $defModStrings[$def['label']];
+            	$availableFields[$key]['translatedLabel'] = translate($def['label'], $this->_moduleName);
             }
 			
         }

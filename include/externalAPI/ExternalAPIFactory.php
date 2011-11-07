@@ -98,7 +98,7 @@ class ExternalAPIFactory
         $meetingPasswordList = array();
         $needUrlList = array();
 
-        $baseDirList = array('include/externalAPI/','custom/include/externalAPI');
+        $baseDirList = array('include/externalAPI/','custom/include/externalAPI/');
         foreach ( $baseDirList as $baseDir ) {
             $dirList = glob($baseDir.'*',GLOB_ONLYDIR);
             foreach($dirList as $dir) {

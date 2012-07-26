@@ -267,7 +267,7 @@ class ModuleInstaller{
 	function install_copy(){
 		if(isset($this->installdefs['copy'])){
 			/* BEGIN - RESTORE POINT - by MR. MILK August 31, 2005 02:22:11 PM */
-			$backup_path = clean_path( remove_file_extension(urldecode(hashToFile($_REQUEST['install_file'])))."-restore" );
+			$backup_path = clean_path( remove_file_extension(urldecode($_REQUEST['install_file']))."-restore" );
 			/* END - RESTORE POINT - by MR. MILK August 31, 2005 02:22:18 PM */
 			foreach($this->installdefs['copy'] as $cp){
 				$GLOBALS['log']->debug("Copying ..." . $cp['from'].  " to " .$cp['to'] );

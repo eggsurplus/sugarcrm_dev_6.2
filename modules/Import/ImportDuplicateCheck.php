@@ -242,8 +242,9 @@ class ImportDuplicateCheck
             // Adds a hook so you can define a method in the bean to handle dupe checking
             elseif ( isset($index['dupeCheckFunction']) ) {
                 $functionName = substr_replace($index['dupeCheckFunction'],'',0,9);
-                if ( method_exists($this->_focus,$functionName) )
-                    return $this->_focus->$functionName($index);
+                //eggsurplus: only return true if the function catches a dupe. Otherwise, continue checking the rest of the indices
+                if ( method_exists($this->_focus,$functionName) && $this->_focus->$functionName($index) === true)
+                    return true;
             }
             else {
                 $index_fields = array('deleted' => '0');
